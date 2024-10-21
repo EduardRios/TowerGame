@@ -7,6 +7,8 @@ class Block implements Movement {
     xPosition: number;
     yPosition: number;
     Xspeed: number;
+
+    gravity: number;
     
     constructor(width: number, height: number, xPosition:number, yPosition: number, Xspeed: number) {
         this.width = width;
@@ -14,20 +16,27 @@ class Block implements Movement {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.Xspeed = Xspeed;
+
+        this.gravity = 5;
     }
 
     moveInX() {
         this.xPosition += this.Xspeed;
 
-        // Cambia de dirección al tocar los bordes
-        const screenWidth = Dimensions.get('window').width; // Obtiene el ancho de la pantalla
+        // Changes direction
+        const screenWidth = Dimensions.get('window').width; 
         if (this.xPosition <= 0 || this.xPosition + this.width >= screenWidth) {
             this.Xspeed = -this.Xspeed;
         }
     }
 
     moveInY() {
-        // Lógica para mover en Y (puedes implementarla)
+        const screenHeight = Dimensions.get('window').height;
+        if (this.yPosition + this.height < screenHeight) {
+            this.yPosition += this.gravity; // La gravedad empuja el bloque hacia abajo
+        } else {
+            this.yPosition = screenHeight - this.height; // Detenemos la caída en el borde inferior
+        }
     }
 }
 
