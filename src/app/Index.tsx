@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import Block from './Block';
+import Tower from './Tower';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -10,18 +11,7 @@ const Index = () => {
     const [block, setBlock] = useState(new Block(100, 20, 50, 100, 5));
     const [isFalling, setIsFalling] = useState(false);
 
-
-    //Base Block
-    const baseBlockWidth = 150;
-    const baseBlockHeight = 20;
-    const baseBlock = new Block(
-        baseBlockWidth,
-        baseBlockHeight,
-        (screenWidth - baseBlockWidth) / 2,
-
-        screenHeight - 100, //problem here
-        0
-    );
+    const [tower, setTower] = useState(new Tower());
 
     //Effect to move edge to edge
     useEffect(() => {
@@ -41,11 +31,23 @@ const Index = () => {
                 } else {
                     // Move in Y (fall) when falling
                     newBlock.moveInY();
+
+                    if (newBlock.yPosition >= screenHeight - 100) {
+                        const result = tower.addBlock(newBlock); 
+                        if (!result) {
+                           
+                            resetGame();
+                        } else {
+                            setIsFalling(false); 
+                            console.log("helo");
+                            
+                        }
+                    }
                 }
 
-                return newBlock; // Return the updated block
+                return newBlock; 
             });
-        }, 16); // Approx 60 FPS
+        }, 16); 
 
         return () => clearInterval(interval);
     }, [isFalling]);
@@ -53,6 +55,12 @@ const Index = () => {
 
     const handleTouch = () => {
         setIsFalling(true);
+    };
+
+    const resetGame = () => {
+        setBlock(new Block(100, 20, 50, 100, 5));
+        setIsFalling(false);
+        setTower(new Tower()); 
     };
 
 
@@ -78,10 +86,10 @@ const Index = () => {
                     style={[
                         styles.baseBlockStyle,
                         {
-                            width: baseBlock.width,
-                            height: baseBlock.height,
-                            left: baseBlock.xPosition,
-                            top: baseBlock.yPosition,
+                            width: tower.blocks[0].width,
+                            height: tower.blocks[0].height,
+                            left: tower.blocks[0].xPosition,
+                            top: tower.blocks[0].yPosition,
                         },
                     ]}
                 />

@@ -31,12 +31,7 @@ class Block implements Movement {
     }
 
     moveInY() {
-        const screenHeight = Dimensions.get('window').height;
-        if (this.yPosition + this.height < screenHeight) {
-            this.yPosition += this.gravity; // La gravedad empuja el bloque hacia abajo
-        } else {
-            this.yPosition = screenHeight - this.height; // Detenemos la caída en el borde inferior
-        }
+        this.yPosition += this.gravity;
     }
 }
 
