@@ -34,18 +34,14 @@ const Index = () => {
                     
                     newBlock.moveInY();
 
-                    if (newBlock.yPosition >= screenHeight - 100) {
-                        const result = tower.addBlock(newBlock); 
-                        if (!result) {
-                           
-                            resetGame();
-                        } else {
-                            setIsFalling(false); 
-                            
-                            
-                            
-                        }
+                    if (tower.addBlock(newBlock)){
+                        setIsFalling(false);
+
+                    } else if (newBlock.yPosition >= screenHeight - 100) {
+                        
+                        resetGame();
                     }
+
                 }
 
                 return newBlock; 
@@ -53,7 +49,7 @@ const Index = () => {
         }, 16); 
 
         return () => clearInterval(interval);
-    }, [isFalling]);
+    }, [isFalling, tower]);
 
 
     const handleTouch = () => {
