@@ -8,7 +8,8 @@ const screenWidth = Dimensions.get('window').width;
 
 const Index = () => {
 
-    const [block, setBlock] = useState(new Block(100, 20, 50, 100, 5));
+    const [block, setBlock] = useState(Block.createNewBlock());
+    
     const [isFalling, setIsFalling] = useState(false);
 
     const [tower, setTower] = useState(new Tower());
@@ -36,7 +37,12 @@ const Index = () => {
 
                     if (tower.addBlock(newBlock)){
                         setIsFalling(false);
+                        //setBlock(Block.createNewBlock());
 
+                        //const newFallingBlock = Block.createNewBlock();
+                        //setBlock(newFallingBlock);
+
+                        
                     } else if (newBlock.yPosition >= screenHeight - 100) {
                         
                         resetGame();
@@ -57,7 +63,7 @@ const Index = () => {
     };
 
     const resetGame = () => {
-        setBlock(new Block(100, 20, 50, 100, 5));
+        setBlock(Block.createNewBlock());
         setIsFalling(false);
         setTower(new Tower()); 
     };

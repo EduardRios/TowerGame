@@ -33,6 +33,18 @@ class Block implements Movement {
     moveInY() {
         this.yPosition += this.gravity;
     }
+
+    static createNewBlock() {
+        const screenWidth = Dimensions.get('window').width;
+        const newBlockWidth = 100;
+        const newBlockHeight = 20;
+        const startXPosition = Math.random() * (screenWidth - newBlockWidth);
+        const startYPosition = 100;  
+        const speedX = 5;
+
+        return new Block(newBlockWidth, newBlockHeight, startXPosition, startYPosition, speedX);
+    }
+
 }
 
 export default Block;
