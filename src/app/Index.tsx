@@ -25,11 +25,13 @@ const Index = () => {
                     prevBlock.Xspeed
                 );
 
+                 // Move in X when not falling
                 if (!isFalling) {
-                    // Move in X when not falling
                     newBlock.moveInX();
+
+                // Move in Y (fall) when falling    
                 } else {
-                    // Move in Y (fall) when falling
+                    
                     newBlock.moveInY();
 
                     if (newBlock.yPosition >= screenHeight - 100) {
@@ -39,7 +41,8 @@ const Index = () => {
                             resetGame();
                         } else {
                             setIsFalling(false); 
-                            console.log("helo");
+                            
+                            
                             
                         }
                     }

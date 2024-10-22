@@ -29,14 +29,19 @@ class Tower {
 
     addBlock(fallingBlock: Block) {
         if (this.checkCollision(fallingBlock)) {
+            fallingBlock.yPosition = this.blocks[this.blocks.length - 1].yPosition - fallingBlock.height;
+            
+            fallingBlock.Xspeed = 0;
 
             this.blocks.push(fallingBlock);
+
             return true;
         } else {
             this.isGameOver = true;
             return false;
         }
     }
+    
 
     checkCollision(fallingBlock: Block): boolean {
         const baseBlock = this.baseBlock;
