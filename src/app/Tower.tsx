@@ -33,6 +33,7 @@ class Tower {
 
             fallingBlock.Xspeed = 0;
             this.blocks.push(fallingBlock);
+            console.log("adding block "+ fallingBlock);
 
             return true;
         } else {

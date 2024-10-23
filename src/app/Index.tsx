@@ -9,9 +9,7 @@ const screenWidth = Dimensions.get('window').width;
 const Index = () => {
 
     const [block, setBlock] = useState(Block.createNewBlock());
-    
     const [isFalling, setIsFalling] = useState(false);
-
     const [tower, setTower] = useState(new Tower());
 
     //Effect to move edge to edge
@@ -26,33 +24,36 @@ const Index = () => {
                     prevBlock.Xspeed
                 );
 
-                 // Move in X when not falling
+                // Move in X when not falling
                 if (!isFalling) {
                     newBlock.moveInX();
 
-                // Move in Y (fall) when falling    
+                    // Move in Y (fall) when falling    
                 } else {
-                    
+
                     newBlock.moveInY();
 
-                    if (tower.addBlock(newBlock)){
+                    // Check if the block can be added to the tower
+                    if (tower.addBlock(newBlock)) {
                         setIsFalling(false);
                         //setBlock(Block.createNewBlock());
 
-                        //const newFallingBlock = Block.createNewBlock();
-                        //setBlock(newFallingBlock);
+                        const newFallingBlock = Block.createNewBlock();
+                        // setBlock(newFallingBlock);
+                        console.log("returning block " + newFallingBlock);
+                        return newFallingBlock;
 
-                        
+
                     } else if (newBlock.yPosition >= screenHeight - 100) {
-                        
+                        console.log("RESETTING");
                         resetGame();
                     }
 
                 }
 
-                return newBlock; 
+                return newBlock;
             });
-        }, 16); 
+        }, 16);
 
         return () => clearInterval(interval);
     }, [isFalling, tower]);
@@ -65,7 +66,7 @@ const Index = () => {
     const resetGame = () => {
         setBlock(Block.createNewBlock());
         setIsFalling(false);
-        setTower(new Tower()); 
+        setTower(new Tower());
     };
 
 
@@ -87,17 +88,21 @@ const Index = () => {
                 />
 
                 {/* base block */}
-                <View
-                    style={[
-                        styles.baseBlockStyle,
-                        {
-                            width: tower.blocks[0].width,
-                            height: tower.blocks[0].height,
-                            left: tower.blocks[0].xPosition,
-                            top: tower.blocks[0].yPosition,
-                        },
-                    ]}
-                />
+                {tower.blocks.map((towerBlock, index) => (
+                    <View
+                        key={index}
+                        style={[
+                            styles.baseBlockStyle,
+                            {
+                                width: towerBlock.width,
+                                height: towerBlock.height,
+                                left: towerBlock.xPosition,
+                                top: towerBlock.yPosition,
+                            },
+                        ]}
+                    />
+                ))}
+
             </View>
         </TouchableWithoutFeedback>
     );
