@@ -28,13 +28,12 @@ class Tower {
     }
 
     addBlock(fallingBlock: Block) {
-        if (this.checkCollision(fallingBlock)) {
-            fallingBlock.yPosition = this.blocks[this.blocks.length - 1].yPosition - fallingBlock.height;
-
+        const lastBlock = this.blocks[this.blocks.length - 1];
+    
+        if (this.checkCollision(fallingBlock, lastBlock)) {
+            fallingBlock.yPosition = lastBlock.yPosition - fallingBlock.height;
             fallingBlock.Xspeed = 0;
             this.blocks.push(fallingBlock);
-            console.log("adding block "+ fallingBlock);
-
             return true;
         } else {
             this.isGameOver = true;
@@ -43,15 +42,14 @@ class Tower {
     }
     
 
-    checkCollision(fallingBlock: Block): boolean {
-        const baseBlock = this.baseBlock;
-
+    checkCollision(fallingBlock: Block, targetBlock: Block): boolean {
         return (
-            fallingBlock.xPosition < baseBlock.xPosition + baseBlock.width &&
-            fallingBlock.xPosition + fallingBlock.width > baseBlock.xPosition &&
-            fallingBlock.yPosition + fallingBlock.height >= baseBlock.yPosition
+            fallingBlock.xPosition < targetBlock.xPosition + targetBlock.width &&
+            fallingBlock.xPosition + fallingBlock.width > targetBlock.xPosition &&
+            fallingBlock.yPosition + fallingBlock.height >= targetBlock.yPosition
         );
     }
+
 }
 
 

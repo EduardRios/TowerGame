@@ -35,20 +35,16 @@ const Index = () => {
 
                     // Check if the block can be added to the tower
                     if (tower.addBlock(newBlock)) {
-                        setIsFalling(false);
-                        //setBlock(Block.createNewBlock());
 
+                        setIsFalling(false);
                         const newFallingBlock = Block.createNewBlock();
-                        // setBlock(newFallingBlock);
-                        console.log("returning block " + newFallingBlock);
+    
                         return newFallingBlock;
 
-
                     } else if (newBlock.yPosition >= screenHeight - 100) {
-                        console.log("RESETTING");
+                
                         resetGame();
                     }
-
                 }
 
                 return newBlock;
