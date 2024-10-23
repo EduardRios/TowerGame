@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text ,View, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import Block from './Block';
 import Tower from './Tower';
 
@@ -90,18 +90,20 @@ const Index = () => {
 
                 {/* base block */}
                 {tower.blocks.map((towerBlock, index) => (
-                    <View
-                        key={index}
-                        style={[
-                            styles.baseBlockStyle,
-                            {
-                                width: towerBlock.width,
-                                height: towerBlock.height,
-                                left: towerBlock.xPosition,
-                                top: towerBlock.yPosition,
-                            },
-                        ]}
-                    />
+                    <View key={index} style={[
+                        styles.baseBlockStyle,
+                        {
+                            width: towerBlock.width,
+                            height: towerBlock.height,
+                            left: towerBlock.xPosition,
+                            top: towerBlock.yPosition,
+                        },
+                    ]}>
+                        {/* Middle line in each block*/}
+                        {index === tower.blocks.length - 1 && (
+                            <View style={styles.alignmentIndicator} />
+                        )}
+                    </View>
                 ))}
 
                 {/* Display Score */}
@@ -139,6 +141,15 @@ const styles = StyleSheet.create({
         top: 20,
         left: 10,
     },
+
+    alignmentIndicator: {
+        position: 'absolute',
+        height: '100%',
+        width: 2,
+        backgroundColor: 'red',
+        left: '50%', // Centro del bloque
+    }
+
 });
 
 export default Index;
