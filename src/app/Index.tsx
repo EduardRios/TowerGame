@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { Text ,View, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import Block from './Block';
 import Tower from './Tower';
 
@@ -11,6 +11,8 @@ const Index = () => {
     const [block, setBlock] = useState(Block.createNewBlock());
     const [isFalling, setIsFalling] = useState(false);
     const [tower, setTower] = useState(new Tower());
+
+    const [score, setScore] = useState(0);
 
     //Effect to move edge to edge
     useEffect(() => {
@@ -36,13 +38,15 @@ const Index = () => {
                     // Check if the block can be added to the tower
                     if (tower.addBlock(newBlock)) {
 
+                        setScore(prevScore => prevScore + 1);
+
                         setIsFalling(false);
                         const newFallingBlock = Block.createNewBlock();
-    
+
                         return newFallingBlock;
 
                     } else if (newBlock.yPosition >= screenHeight - 100) {
-                
+
                         resetGame();
                     }
                 }
@@ -60,6 +64,7 @@ const Index = () => {
     };
 
     const resetGame = () => {
+        setScore(0);
         setBlock(Block.createNewBlock());
         setIsFalling(false);
         setTower(new Tower());
@@ -99,6 +104,9 @@ const Index = () => {
                     />
                 ))}
 
+                {/* Display Score */}
+                <Text style={styles.scoreText}>Score: {score}</Text>
+
             </View>
         </TouchableWithoutFeedback>
     );
@@ -122,6 +130,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'green',
         borderTopWidth: 2,
         borderColor: 'black',
+    },
+
+    scoreText: {
+        fontSize: 24,
+        color: 'black',
+        position: 'absolute',
+        top: 20,
+        left: 10,
     },
 });
 
