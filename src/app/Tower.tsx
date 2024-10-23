@@ -12,11 +12,14 @@ class Tower {
     baseBlockWidth: number;
     baseBlockHeight: number;
     baseBlock: Block;
+
+    aligmentTolerance: number;
     
 
     constructor() {
         this.baseBlockWidth = 150;
         this.baseBlockHeight = 20;
+        this.aligmentTolerance = 10;
         this.baseBlock = new Block(
             this.baseBlockWidth,
             this.baseBlockHeight,
@@ -33,11 +36,19 @@ class Tower {
         if (this.checkCollision(fallingBlock, lastBlock)) {
             fallingBlock.yPosition = lastBlock.yPosition - fallingBlock.height;
             fallingBlock.Xspeed = 0;
+
+            const isAligned = this.checkAlignment(fallingBlock, lastBlock);
+            if(isAligned){
+                console.log("Perfect alignment! Granting bonus points or effects.");
+            }
+            
             this.blocks.push(fallingBlock);
             return true;
+            //return { success: true, isAligned };
         } else {
             this.isGameOver = true;
             return false;
+            //return { success: false, isAligned: false };
         }
     }
     
@@ -50,6 +61,15 @@ class Tower {
         );
     }
 
+
+    checkAlignment(fallingBlock: Block, lastBlock: Block): boolean {
+        const lastBlockCenter = lastBlock.xPosition + lastBlock.width / 2;
+        const fallingBlockCenter = fallingBlock.xPosition + fallingBlock.width / 2;
+    
+        //Returns true if distance between centers is < than tolerance
+        return Math.abs(lastBlockCenter - fallingBlockCenter) <= this.aligmentTolerance;
+    }
+    
 }
 
 
