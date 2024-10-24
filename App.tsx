@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
-import Block from './Block';
-import Tower from './Tower';
+import Block from './src/app/Block';
+import Tower from './src/app/Tower';
+
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -11,8 +12,9 @@ const Index = () => {
     const [block, setBlock] = useState(Block.createNewBlock());
     const [isFalling, setIsFalling] = useState(false);
     const [tower, setTower] = useState(new Tower());
-
     const [score, setScore] = useState(0);
+
+    const [showParticles, setShowParticles] = useState(false);
 
     //Effect to move edge to edge
     useEffect(() => {
@@ -37,12 +39,14 @@ const Index = () => {
 
                     // Check if the block can be added to the tower
                     if (tower.addBlockToTower(newBlock)) {
-
                         setScore(prevScore => prevScore + 1);
 
-                        setIsFalling(false);
-                        const newFallingBlock = Block.createNewBlock();
+                        //setShowParticles(true);
+                        //setTimeout(() => setShowParticles(false), 1500);
 
+                        setIsFalling(false);
+
+                        const newFallingBlock = Block.createNewBlock();
                         return newFallingBlock;
 
                     } else if (newBlock.yPosition >= screenHeight - 100) {
@@ -108,6 +112,12 @@ const Index = () => {
 
                 {/* Display Score */}
                 <Text style={styles.scoreText}>Score: {score}</Text>
+
+
+                {/* Confetti Effect */}
+                {/* {showParticles && (
+                    <ConfettiCannon count={200} origin={{ x: screenWidth / 2, y: screenHeight - 100 }} />
+                )} */}
 
             </View>
         </TouchableWithoutFeedback>

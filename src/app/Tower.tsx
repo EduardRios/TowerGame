@@ -38,7 +38,7 @@ class Tower {
             fallingBlock.Xspeed = 0;
 
             const isAligned = this.checkAlignment(fallingBlock, lastBlock);
-            if (isAligned) {
+            if (isAligned && lastBlock !== this.baseBlock) {
                 console.log("Perfect alignment! Granting bonus points or effects.");
 
                 this.blocks.pop();
@@ -79,7 +79,6 @@ class Tower {
         //Returns true if distance between centers is < than tolerance
         return Math.abs(lastBlockCenter - fallingBlockCenter) <= this.aligmentTolerance;
     }
-
 
 }
 

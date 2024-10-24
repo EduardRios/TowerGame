@@ -17,7 +17,7 @@ class Block implements Movement {
         this.yPosition = yPosition;
         this.Xspeed = Xspeed;
 
-        this.gravity = 5;
+        this.gravity = 10;
     }
 
     moveInX() {
