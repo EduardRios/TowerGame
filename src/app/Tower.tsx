@@ -42,15 +42,13 @@ class Tower {
                 console.log("Perfect alignment! Granting bonus points or effects.");
 
                 this.blocks.pop();
+            } else {
+                this.blocks.push(fallingBlock);
             }
-
-            //Add block
-            this.blocks.push(fallingBlock);
-
 
             //adjust blocks
             this.blocks.slice(1).forEach((block, index) => {
-                 block.yPosition = this.baseBlock.yPosition - (index + 1) * block.height;
+                block.yPosition = this.baseBlock.yPosition - (index + 1) * block.height;
             });
 
             return true;
@@ -81,6 +79,7 @@ class Tower {
         //Returns true if distance between centers is < than tolerance
         return Math.abs(lastBlockCenter - fallingBlockCenter) <= this.aligmentTolerance;
     }
+
 
 }
 
