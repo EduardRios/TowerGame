@@ -3,6 +3,8 @@ import { Text, View, StyleSheet, Dimensions, TouchableWithoutFeedback } from 're
 import Block from './src/app/Block';
 import Tower from './src/app/Tower';
 
+import ParticleAnimation from './src/app/components/ParticleAnimation';
+
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -41,8 +43,8 @@ const Index = () => {
                     if (tower.addBlockToTower(newBlock)) {
                         setScore(prevScore => prevScore + 1);
 
-                        //setShowParticles(true);
-                        //setTimeout(() => setShowParticles(false), 1500);
+                        setShowParticles(true);
+                        setTimeout(() => setShowParticles(false), 1500);
 
                         setIsFalling(false);
 
@@ -113,11 +115,11 @@ const Index = () => {
                 {/* Display Score */}
                 <Text style={styles.scoreText}>Score: {score}</Text>
 
-
-                {/* Confetti Effect */}
-                {/* {showParticles && (
-                    <ConfettiCannon count={200} origin={{ x: screenWidth / 2, y: screenHeight - 100 }} />
-                )} */}
+                
+                {/* Mostrar la animación de partículas cuando sea necesario */}
+                {showParticles && <ParticleAnimation isVisible={showParticles} />} 
+              
+            
 
             </View>
         </TouchableWithoutFeedback>
