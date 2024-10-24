@@ -30,7 +30,7 @@ class Tower {
         this.blocks = [this.baseBlock]
     }
 
-    addBlock(fallingBlock: Block) {
+    addBlockToTower(fallingBlock: Block) {
         const lastBlock = this.blocks[this.blocks.length - 1];
 
         if (this.checkCollision(fallingBlock, lastBlock)) {

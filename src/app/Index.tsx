@@ -36,7 +36,7 @@ const Index = () => {
                     newBlock.moveInY();
 
                     // Check if the block can be added to the tower
-                    if (tower.addBlock(newBlock)) {
+                    if (tower.addBlockToTower(newBlock)) {
 
                         setScore(prevScore => prevScore + 1);
 
