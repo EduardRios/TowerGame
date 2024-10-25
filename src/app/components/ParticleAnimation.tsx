@@ -38,8 +38,6 @@ const ParticleAnimation = ({ isVisible, xPosition, yPosition }: { isVisible: boo
 const styles = StyleSheet.create({
   animationContainer: {
     position: 'absolute',
-    top: screenHeight - 150,
-    left: screenWidth / 2 - 75,
     width: 150,
     height: 150,
     zIndex: 10, 

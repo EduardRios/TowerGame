@@ -31,7 +31,7 @@ class Tower {
             this.baseBlockWidth,
             this.baseBlockHeight,
             (screenWidth - this.baseBlockWidth) / 2,
-            screenHeight - 100, //problem here
+            screenHeight - 100, //problem here 
             0,
             baseBlockImage
         );

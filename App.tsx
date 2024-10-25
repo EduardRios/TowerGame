@@ -48,16 +48,11 @@ const Index = () => {
                     if (tower.addBlockToTower(newBlock)) {
                         setScore(prevScore => prevScore + 1);
 
-                        if (tower.particleBlock) {
-                            setParticlePosition({
-                                x: tower.particleBlock.xPosition + (tower.particleBlock.width / 2),
-                                y: tower.particleBlock.yPosition,
-                            });
-                            setShowParticles(true);
-                            setTimeout(() => setShowParticles(false), 1500);
-                            console.log("Particulas");
-                        }
+                        setParticlePosition({ x: newBlock.xPosition, y: newBlock.yPosition });
+                        setShowParticles(true);
+                        setTimeout(() => setShowParticles(false), 1000);
 
+                        console.log("Particulas");
 
                         setIsFalling(false);
 
@@ -130,7 +125,7 @@ const Index = () => {
 
 
 
-
+                {/* base block image */}
                 {tower.blocks.map((towerBlock, index) => (
                     <View key={index} style={{ position: 'absolute' }}>
                         <Image
@@ -140,7 +135,7 @@ const Index = () => {
                                 {
                                     width: towerBlock.width,
                                     height: towerBlock.height,
-                                    left: towerBlock.xPosition, //here problem
+                                    left: towerBlock.xPosition-200, //here problem
                                     top: towerBlock.yPosition,
                                 },
                             ]}
@@ -156,30 +151,34 @@ const Index = () => {
                                 ]}
                             />
                         )}
+
+                        {showParticles && (
+                            <ParticleAnimation
+                                isVisible={showParticles}
+                                xPosition={particlePosition.x-200}//here
+                                yPosition={particlePosition.y-70} //here
+                            />
+                        )}
+
+
+
+
+                        
                     </View>
                 ))}
-
-
-
-
-
-
-
-
-
 
                 {/* Display Score */}
                 <Text style={styles.scoreText}>Score: {score}</Text>
 
 
                 {/* Mostrar la animación de partículas cuando sea necesario */}
-                {showParticles && (
+                {/* {showParticles && (
                     <ParticleAnimation
                         isVisible={showParticles}
                         xPosition={particlePosition.x}
-                        yPosition={particlePosition.y}
+                        yPosition={particlePosition.y - 100}
                     />
-                )}
+                )} */}
 
             </View>
         </TouchableWithoutFeedback>
