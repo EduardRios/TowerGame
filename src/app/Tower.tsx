@@ -2,6 +2,9 @@
 //Class Tower
 import Block from "./Block";
 import { Dimensions } from "react-native";
+import { ImageSourcePropType } from "react-native";
+
+
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -21,12 +24,16 @@ class Tower {
         this.baseBlockWidth = 150;
         this.baseBlockHeight = 20;
         this.aligmentTolerance = 10;
+
+        const baseBlockImage: ImageSourcePropType = require("C:/Users/eduar/projects/towerGame/assets/images/brick.png");
+
         this.baseBlock = new Block(
             this.baseBlockWidth,
             this.baseBlockHeight,
             (screenWidth - this.baseBlockWidth) / 2,
             screenHeight - 100, //problem here
-            0
+            0,
+            baseBlockImage
         );
         this.blocks = [this.baseBlock]
 
@@ -54,9 +61,9 @@ class Tower {
             this.particleBlock = fallingBlock;
             
             //adjust blocks
-            // this.blocks.slice(1).forEach((block, index) => {
-            //     block.yPosition = this.baseBlock.yPosition - (index + 1) * block.height;
-            // });
+            this.blocks.slice(1).forEach((block, index) => {
+                block.yPosition = this.baseBlock.yPosition - (index + 1) * block.height;
+            });
 
 
             return true;

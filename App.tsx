@@ -3,6 +3,8 @@ import { Text, View, StyleSheet, Dimensions, TouchableWithoutFeedback } from 're
 import Block from './src/app/Block';
 import Tower from './src/app/Tower';
 
+import { Image } from 'react-native';
+
 import ParticleAnimation from './src/app/components/ParticleAnimation';
 
 
@@ -29,7 +31,8 @@ const Index = () => {
                     prevBlock.height,
                     prevBlock.xPosition,
                     prevBlock.yPosition,
-                    prevBlock.Xspeed
+                    prevBlock.Xspeed,
+                    prevBlock.imageSource
                 );
 
                 // Move in X when not falling
@@ -92,7 +95,8 @@ const Index = () => {
         <TouchableWithoutFeedback onPress={handleTouch}>
             <View style={styles.containerStyle}>
                 {/* moveable block */}
-                <View
+                <Image
+                    source={block.imageSource}
                     style={[
                         styles.blockStyle,
                         {
@@ -103,6 +107,7 @@ const Index = () => {
                         },
                     ]}
                 />
+
 
                 {/* base block */}
                 {tower.blocks.map((towerBlock, index) => (
@@ -123,10 +128,50 @@ const Index = () => {
                     </View>
                 ))}
 
+
+
+
+                {tower.blocks.map((towerBlock, index) => (
+                    <View key={index} style={{ position: 'absolute' }}>
+                        <Image
+                            source={towerBlock.imageSource}
+                            style={[
+                                styles.baseBlockStyle,
+                                {
+                                    width: towerBlock.width,
+                                    height: towerBlock.height,
+                                    left: towerBlock.xPosition, //here problem
+                                    top: towerBlock.yPosition,
+                                },
+                            ]}
+                        />
+
+
+                        {/* Línea de alineación en el último bloque */}
+                        {index === tower.blocks.length - 1 && (
+                            <View
+                                style={[
+                                    styles.alignmentIndicator,
+                                    { top: towerBlock.yPosition, left: screenWidth / 2 },
+                                ]}
+                            />
+                        )}
+                    </View>
+                ))}
+
+
+
+
+
+
+
+
+
+
                 {/* Display Score */}
                 <Text style={styles.scoreText}>Score: {score}</Text>
 
-                
+
                 {/* Mostrar la animación de partículas cuando sea necesario */}
                 {showParticles && (
                     <ParticleAnimation
@@ -141,6 +186,9 @@ const Index = () => {
     );
 
 };
+
+
+
 
 const styles = StyleSheet.create({
     containerStyle: {

@@ -7,17 +7,19 @@ class Block implements Movement {
     xPosition: number;
     yPosition: number;
     Xspeed: number;
-
     gravity: number;
+
+    imageSource: any;
     
-    constructor(width: number, height: number, xPosition:number, yPosition: number, Xspeed: number) {
+    constructor(width: number, height: number, xPosition:number, yPosition: number, Xspeed: number, imageSource: any) {
         this.width = width;
         this.height = height;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.Xspeed = Xspeed;
-
         this.gravity = 10;
+
+        this.imageSource = imageSource;
     }
 
     moveInX() {
@@ -42,7 +44,9 @@ class Block implements Movement {
         const startYPosition = 100;  
         const speedX = 5;
 
-        return new Block(newBlockWidth, newBlockHeight, startXPosition, startYPosition, speedX);
+        const imageSource = require("C:/Users/eduar/projects/towerGame/assets/images/brick.png");
+
+        return new Block(newBlockWidth, newBlockHeight, startXPosition, startYPosition, speedX, imageSource);
     }
 
 }
