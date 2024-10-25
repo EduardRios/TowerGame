@@ -18,6 +18,8 @@ const Index = () => {
 
     const [showParticles, setShowParticles] = useState(false);
 
+    const [particlePosition, setParticlePosition] = useState({ x: 0, y: 0 });
+
     //Effect to move edge to edge
     useEffect(() => {
         const interval = setInterval(() => {
@@ -43,8 +45,16 @@ const Index = () => {
                     if (tower.addBlockToTower(newBlock)) {
                         setScore(prevScore => prevScore + 1);
 
-                        setShowParticles(true);
-                        setTimeout(() => setShowParticles(false), 1500);
+                        if (tower.particleBlock) {
+                            setParticlePosition({
+                                x: tower.particleBlock.xPosition + (tower.particleBlock.width / 2),
+                                y: tower.particleBlock.yPosition,
+                            });
+                            setShowParticles(true);
+                            setTimeout(() => setShowParticles(false), 1500);
+                            console.log("Particulas");
+                        }
+
 
                         setIsFalling(false);
 
@@ -109,6 +119,7 @@ const Index = () => {
                         {index === tower.blocks.length - 1 && (
                             <View style={styles.alignmentIndicator} />
                         )}
+
                     </View>
                 ))}
 
@@ -117,9 +128,13 @@ const Index = () => {
 
                 
                 {/* Mostrar la animación de partículas cuando sea necesario */}
-                {showParticles && <ParticleAnimation isVisible={showParticles} />} 
-              
-            
+                {showParticles && (
+                    <ParticleAnimation
+                        isVisible={showParticles}
+                        xPosition={particlePosition.x}
+                        yPosition={particlePosition.y}
+                    />
+                )}
 
             </View>
         </TouchableWithoutFeedback>
@@ -131,7 +146,7 @@ const styles = StyleSheet.create({
     containerStyle: {
         flex: 1,
         backgroundColor: '#fff',
-        justifyContent: 'center',
+        //justifyContent: 'center',
         alignItems: 'center',
     },
     blockStyle: {
@@ -159,7 +174,7 @@ const styles = StyleSheet.create({
         height: '100%',
         width: 2,
         backgroundColor: 'red',
-        left: '50%', // Centro del bloque
+        left: '50%',
     }
 
 });

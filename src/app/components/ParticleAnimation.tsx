@@ -7,7 +7,7 @@ import particleAnimation from 'C:/Users/eduar/projects/towerGame/assets/Particle
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-const ParticleAnimation = ({ isVisible }: { isVisible: boolean }) => {
+const ParticleAnimation = ({ isVisible, xPosition, yPosition }: { isVisible: boolean, xPosition: number, yPosition: number }) => {
   
   const animationRef = useRef<LottieView>(null);
 
@@ -18,18 +18,21 @@ const ParticleAnimation = ({ isVisible }: { isVisible: boolean }) => {
   }, [isVisible]);
 
   return (
-    <View style={styles.animationContainer}>
-
-      {/* Render lottie animation */}
-      <LottieView
-        ref={animationRef} 
-        source={particleAnimation} 
-        autoPlay={false} 
-        loop={false} 
-        style={styles.lottieStyle}
-      />
+    <View style={[
+        styles.animationContainer,
+        { top: yPosition, left: xPosition }
+    ]}>
+        <LottieView
+            ref={animationRef} 
+            source={particleAnimation} 
+            autoPlay={false} 
+            loop={false} 
+            style={styles.lottieStyle}
+        />
     </View>
-  );
+);
+
+
 };
 
 const styles = StyleSheet.create({

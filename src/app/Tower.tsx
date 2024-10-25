@@ -12,8 +12,9 @@ class Tower {
     baseBlockWidth: number;
     baseBlockHeight: number;
     baseBlock: Block;
-
     aligmentTolerance: number;
+
+    particleBlock: Block | null;
 
 
     constructor() {
@@ -28,10 +29,14 @@ class Tower {
             0
         );
         this.blocks = [this.baseBlock]
+
+        this.particleBlock = null;
+
     }
 
     addBlockToTower(fallingBlock: Block) {
         const lastBlock = this.blocks[this.blocks.length - 1];
+
 
         if (this.checkCollision(fallingBlock, lastBlock)) {
             fallingBlock.yPosition = lastBlock.yPosition - fallingBlock.height;
@@ -46,10 +51,13 @@ class Tower {
                 this.blocks.push(fallingBlock);
             }
 
+            this.particleBlock = fallingBlock;
+            
             //adjust blocks
-            this.blocks.slice(1).forEach((block, index) => {
-                block.yPosition = this.baseBlock.yPosition - (index + 1) * block.height;
-            });
+            // this.blocks.slice(1).forEach((block, index) => {
+            //     block.yPosition = this.baseBlock.yPosition - (index + 1) * block.height;
+            // });
+
 
             return true;
             //return { success: true, isAligned };
